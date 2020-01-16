@@ -4,7 +4,7 @@ import os
 
 
 def prepare_total_pop():
-    with open(os.getcwd() + "/../data/raw/population/WPP2019_TotalPopulationBySex.csv") as f:
+    with open(os.getcwd() + "/data/raw/WPP2019_TotalPopulationBySex.csv") as f:
         total_pop = pd.read_csv(f, engine="python")
     print(total_pop.columns)
 
@@ -46,11 +46,11 @@ def prepare_age_pop():
 
 if __name__ == '__main__':
     total_pop = prepare_total_pop()
-    age_pop = prepare_age_pop()
+#    age_pop = prepare_age_pop()
 
     print(total_pop.head(2))
-    print(age_pop.head(2))
+ #   print(age_pop.head(2))
 
 
-    total_pop.to_csv("./../data/clean/population_total.csv")
-    age_pop.to_csv("./../data/clean/population_per_age.csv")
+    total_pop.to_csv("data/clean/population_total.csv")
+#    age_pop.to_csv("data/clean/population_per_age.csv")
