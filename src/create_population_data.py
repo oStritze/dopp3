@@ -19,7 +19,7 @@ def prepare_total_pop():
     total_pop.columns = ["Code", "Country", "Year", "PopMale", "PopFemale", "PopTotal"]
     total_pop.set_index(["Country", "Year"], inplace=True)
 
-    total_pop[["PopMale", "PopFemale", "PopTotal"]] = (total_pop[["PopMale", "PopFemale", "PopTotal"]].fillna(0) * 1000).astype(int)
+    total_pop[["PopMale", "PopFemale", "PopTotal"]] = (total_pop[["PopMale", "PopFemale", "PopTotal"]].fillna(0) * 1000).astype("int64")
     return total_pop
 
 
@@ -40,7 +40,7 @@ def prepare_age_pop():
     print("AgeGrp values", age_pop["AgeGrp"].unique())
     age_pop.set_index(["Country", "Year", "AgeGrp"], inplace=True)
 
-    age_pop[["PopMale", "PopFemale", "PopTotal"]] = (age_pop[["PopMale", "PopFemale", "PopTotal"]].fillna(0) * 1000).astype(int)
+    age_pop[["PopMale", "PopFemale", "PopTotal"]] = (age_pop[["PopMale", "PopFemale", "PopTotal"]].fillna(0) * 1000).astype("int64")
     return age_pop
 
 
