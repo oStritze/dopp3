@@ -17,7 +17,7 @@ What is the most accurate overview of flows of refugees between countries that c
 - use relative number for immigration/migration numbers (total divided by number of inhabitants)
 1. Merge state stability index with new UN dataset (period_indicators_medium) and total population dataset. 
     - merge population_by_age.csv with population_total.csv 
-    - Make a feature selection/PCA 
+    - Make a feature selection/PCA, for migration and immigration countries (may have different features)
 2. Classify same data and test/train different models for classification (with 10fold CV). No regression, only classification
     - define variable to predict 
     - from number of migrants/immigrants, define a scale (0-1 or 0,1,2,3,4,5) for migration (high/medium/ low numbers)
@@ -32,7 +32,6 @@ Please Comment code appropriately
 
 
 ## TODOs
-optional: look for another state stability index set which is longer than 2006-2019
 ### Prepare Data
 - [x] Choose Datasets
 - [ ] Prepare Datasets (michi, oli)
