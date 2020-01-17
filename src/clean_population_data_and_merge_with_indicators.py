@@ -33,11 +33,24 @@ indicators = pd.read_csv("data/raw/WPP2019_Period_Indicators_Medium.csv", sep=",
 # ,dtype={"Deaths":"int64", "DeathsMale":"int64", "DeathsFemale":"int64", "NetMigrations":"int64"}
  )
 # convert readable per 1000 values to ints
-indicators[["Births", "Deaths", "DeathsMale", "DeathsFemale", "NetMigrations"]] = (indicators[["Births", "Deaths", "DeathsMale", "DeathsFemale", "NetMigrations"]].fillna(0) * 1000).astype("int64")
-full_set = indicators.merge(pop_total_with_groups, left_on=['MidPeriod','Location'], right_on=['Year','Country'])
-full_set.drop(columns=['VarID', 'Variant'], inplace=True)
-full_set.rename(columns={"Location" : "Country"}, inplace=True)
-st.write(full_set)
+indicators[["Births", "Deaths", "DeathsMale", "DeathsFemale", "NetMigrations"]] = (indicators[["Births", "Deaths", "DeathsMale", "DeathsFemale", "NetMigrations"]].fillna(0) * 1000 / 5).astype("int64")
+#indicators['RelMigrations'] = indicators[]
+indicators_pop = indicators.merge(pop_total_with_groups, left_on=['MidPeriod','Location'], right_on=['Year','Country'])
+indicators_pop["RelMigrations"] = indicators_pop["NetMigrations"]/indicators_pop["PopTotal"]
+indicators_pop.drop(columns=['VarID', 'Variant'], inplace=True)
+indicators_pop.rename(columns={"Location" : "Country"}, inplace=True)
+st.write(indicators_pop)
 
 # save df
-full_set.to_csv(index=False, path_or_buf="data/clean/population_indicators.csv")
+indicators_pop.to_csv(index=False, path_or_buf="data/clean/population_indicators.csv")
+
+# read fragile states data
+fragile_states = pd.read_csv("data/clean/fragile_states_index.csv", sep=",", na_values='')
+# TODO: compute "change_from_previous_obs" column, which is the difference between total score of this minus the previous observation
+st.write(fragile_states.shape)
+st.write(fragile_states)
+st.write(indicators_pop.shape)
+full_set = indicators_pop.merge(fragile_states, left_on=['Country','MidPeriod'], right_on=['country','year'])
+st.write(full_set.shape)
+st.write(full_set)
+full_set.to_csv(index=False, path_or_buf="data/clean/full_set.csv")
