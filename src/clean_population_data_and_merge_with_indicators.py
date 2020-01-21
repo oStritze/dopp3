@@ -39,6 +39,10 @@ indicators_pop = indicators.merge(pop_total_with_groups, left_on=['MidPeriod','L
 indicators_pop["RelMigrations"] = indicators_pop["NetMigrations"]/indicators_pop["PopTotal"]
 indicators_pop.drop(columns=['VarID', 'Variant'], inplace=True)
 indicators_pop.rename(columns={"Location" : "Country"}, inplace=True)
+
+scale_cols = ["Births", "Deaths", "DeathsMale", "DeathsFemale", "PopMale", "PopFemale", "PopMale_0-19", "PopFemale_0-19",
+              "PopTotal_0-19", "PopMale_20-59", "PopFemale_20-59", "PopTotal_20-59", "PopMale_60+", "PopFemale_60+", "PopTotal_60+"]
+indicators_pop[scale_cols] = indicators_pop[scale_cols].div(indicators_pop["PopTotal"], axis=0)
 st.write(indicators_pop)
 
 # save df

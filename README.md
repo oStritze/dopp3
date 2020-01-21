@@ -34,10 +34,10 @@ Please Comment code appropriately
 ## TODOs
 ### Prepare Data
 - [x] Choose Datasets
-- [ ] Prepare Datasets (michi, oli)
-- [ ] Merge Datasets 
-- [ ] Check what to do with missing values, if there
-- [ ] Check what to do with outliers, if there
+- [x] Prepare Datasets (michi, oli)
+- [x] Merge Datasets 
+- [x] Check what to do with missing values, if there
+- [x] Check what to do with outliers, if there
 ### Explore Data
 #### Task 1 
 - [ ] make some findings and statements
