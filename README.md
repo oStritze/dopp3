@@ -43,7 +43,7 @@ Please Comment code appropriately
 - [ ] make some findings and statements
 - [ ] statistical moments, means, etc?
 - [ ] simple visualizations (corr heatmap, ...)
-- [ ] PCA / feature analysis (raphael)
+- [x] PCA / feature analysis (raphael)
 #### Task 2 Model Data Classifier
 - [ ] try different models 
 - [ ] find best model with CV and parameter tuning (gridsearch)
