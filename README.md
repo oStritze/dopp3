@@ -38,6 +38,8 @@ Please Comment code appropriately
 - [x] Merge Datasets 
 - [x] Check what to do with missing values, if there
 - [x] Check what to do with outliers, if there
+- [ ] Fix missing countries
+- [ ] Rerun analysis with new fixed data set
 ### Explore Data
 #### Task 1 
 - [ ] make some findings and statements
