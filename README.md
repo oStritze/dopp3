@@ -34,16 +34,16 @@ Please Comment code appropriately
 ## TODOs
 ### Prepare Data
 - [x] Choose Datasets
-- [ ] Prepare Datasets (michi, oli)
-- [ ] Merge Datasets 
-- [ ] Check what to do with missing values, if there
-- [ ] Check what to do with outliers, if there
+- [x] Prepare Datasets (michi, oli)
+- [x] Merge Datasets 
+- [x] Check what to do with missing values, if there
+- [x] Check what to do with outliers, if there
 ### Explore Data
 #### Task 1 
 - [ ] make some findings and statements
-- [ ] statistical moments, means, etc?
-- [ ] simple visualizations (corr heatmap, ...)
-- [ ] PCA / feature analysis (raphael)
+- [x] statistical moments, means, etc?
+- [x] simple visualizations (corr heatmap, ...)
+- [x] PCA / feature analysis (raphael)
 #### Task 2 Model Data Classifier
 - [ ] try different models 
 - [ ] find best model with CV and parameter tuning (gridsearch)

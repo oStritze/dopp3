@@ -1,16 +1,16 @@
 import streamlit as st
 import pandas as pd
-import numpy as np 
+import numpy as np
 
 
 # read cleaned population_total data
-pop_total = pd.read_csv("data/clean/population_total.csv", sep=",", na_values='')
+pop_total = pd.read_csv("../data/clean/population_total.csv", sep=",", na_values='')
 pop_total.set_index(['Year', 'Country'], inplace=True)
 st.write(pop_total)
 #print(pop_total[pop_total['PopTotal']<0])
 
 # read cleaned population_per_age group data
-pop_per_age = pd.read_csv("data/clean/population_per_age.csv", sep=",", na_values='')
+pop_per_age = pd.read_csv("../data/clean/population_per_age.csv", sep=",", na_values='')
 pop_per_age.set_index(['Year', 'Country'], inplace=True)
 # drop code since it's not available for merges later anyway
 pop_per_age.drop(columns="Code", inplace=True)
@@ -29,7 +29,7 @@ pop_with_groups = pop_with_groups.merge(pop_per_age_old, left_index=True, right_
 pop_total_with_groups = pop_total.merge(pop_with_groups, left_index=True, right_index=True)
 
 # load indicators dataset
-indicators = pd.read_csv("data/raw/WPP2019_Period_Indicators_Medium.csv", sep=",", na_values=''
+indicators = pd.read_csv("../data/raw/WPP2019_Period_Indicators_Medium.csv", sep=",", na_values=''
 # ,dtype={"Deaths":"int64", "DeathsMale":"int64", "DeathsFemale":"int64", "NetMigrations":"int64"}
  )
 # convert readable per 1000 values to ints
@@ -39,18 +39,30 @@ indicators_pop = indicators.merge(pop_total_with_groups, left_on=['MidPeriod','L
 indicators_pop["RelMigrations"] = indicators_pop["NetMigrations"]/indicators_pop["PopTotal"]
 indicators_pop.drop(columns=['VarID', 'Variant'], inplace=True)
 indicators_pop.rename(columns={"Location" : "Country"}, inplace=True)
+
+scale_cols = ["Births", "Deaths", "DeathsMale", "DeathsFemale", "PopMale", "PopFemale", "PopMale_0-19", "PopFemale_0-19",
+              "PopTotal_0-19", "PopMale_20-59", "PopFemale_20-59", "PopTotal_20-59", "PopMale_60+", "PopFemale_60+", "PopTotal_60+"]
+indicators_pop[scale_cols] = indicators_pop[scale_cols].div(indicators_pop["PopTotal"], axis=0)
 st.write(indicators_pop)
 
 # save df
-indicators_pop.to_csv(index=False, path_or_buf="data/clean/population_indicators.csv")
+indicators_pop.to_csv(index=False, path_or_buf="../data/clean/population_indicators.csv")
 
 # read fragile states data
-fragile_states = pd.read_csv("data/clean/fragile_states_index.csv", sep=",", na_values='')
-# TODO: compute "change_from_previous_obs" column, which is the difference between total score of this minus the previous observation
+fragile_states = pd.read_csv("../data/clean/fragile_states_index.csv", sep=",", na_values='')
 st.write(fragile_states.shape)
 st.write(fragile_states)
 st.write(indicators_pop.shape)
 full_set = indicators_pop.merge(fragile_states, left_on=['Country','MidPeriod'], right_on=['country','year'])
+
+query_result = full_set.query("Time == '2005-2010'")
+full_set.loc[query_result.index, "change_from_previous_year"] = pd.Series(0, index=query_result.index)
+previous = query_result
+for years in ["2010-2015", "2015-2020"]:
+    query_result = full_set.query("Time == '" + years + "'")
+    full_set.loc[query_result.index, "change_from_previous_year"] = \
+        (query_result.set_index("Country")["total"] - previous.set_index("Country")["total"]).round(1).fillna(0).to_numpy()
+    previous = full_set.loc[query_result.index, :]
 st.write(full_set.shape)
 st.write(full_set)
-full_set.to_csv(index=False, path_or_buf="data/clean/full_set.csv")
+full_set.to_csv(index=False, path_or_buf="../data/clean/full_set.csv")
