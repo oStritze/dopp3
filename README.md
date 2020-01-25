@@ -38,8 +38,8 @@ Please Comment code appropriately
 - [x] Merge Datasets 
 - [x] Check what to do with missing values, if there
 - [x] Check what to do with outliers, if there
-- [ ] Fix missing countries
-- [ ] Rerun analysis with new fixed data set
+- [x] Fix missing countries
+- [x] Rerun analysis with new fixed data set
 ### Explore Data
 #### Task 1 
 - [ ] make some findings and statements
@@ -47,7 +47,7 @@ Please Comment code appropriately
 - [x] simple visualizations (corr heatmap, ...)
 - [x] PCA / feature analysis (raphael)
 #### Task 2 Model Data Classifier
-- [ ] try different models 
+- [x] try different models 
 - [ ] find best model with CV and parameter tuning (gridsearch)
 ### Visualize Data 
 - [ ] some interesting visualizations
